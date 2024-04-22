@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 
 # Вместо token вписать токен доступа к Bitrix24
-access_token = "token"
+access_token = "access_token"
 
 # Вместо domain вписать домен вашего Bitrix24
 domain = "domain"
@@ -17,7 +17,7 @@ id = "id"
 s_code = "s_code"
 
 # Вписать вместо Webhook_URL URL вебхука
-webhook_url = "Webhook_URL"
+webhook_url = "webhook_url"
 
 # Установить конечную точку API
 url = f"https://{domain}/rest/{id}/{s_code}/crm.contact.list.json"
@@ -33,7 +33,7 @@ params = {
 }
 
 # Делаем запрос через request.get для получения контактных данных
-response = requests.get(url, headers=headers, params=params)
+response = request.get(url, headers=headers, params=params)
 
 if response.status_code == 200:
     # Извлекаем контактные данные
@@ -42,18 +42,18 @@ if response.status_code == 200:
     # Проверяем каждый контакт и отправляем в Webhook
     for contact in contacts:
         data = {"ID": contact["ID"], "Name": contact["NAME"]}
-        response = requests.post(webhook_url, json=data)
+        response = request.post(webhook_url, json=data)
         print(f"Sent contact {contact['ID']} to Webhook")
 else:
     print("Error retrieving contact data")
 
 # Заходим в базу данных
 conn = psycopg2.connect(
-    dbname="your_database_name",
-    user="your_username",
-    password="your_password",
-    host="your_host",
-    port="your_port",
+    dbname="names",
+    user="postgres",
+    password="password1",
+    host="localhost",
+    port="5432",
 )
 
 
@@ -84,9 +84,9 @@ def bitrix24_webhook(data):
 
 # Добавляем значение пола в контакты Bitrix24
 def update_contact_gender(contact_id, gender):
-    url = "https://your-bitrix24-domain.com/rest/your-application-id/your-access-token/crm.contact.update.json"
+    url = "https://b24-hl15pk.bitrix24.ru/rest/1/rlmk7wo6i5olqomb/profile.json"
     data = {"fields": {"ID": contact_id, "GENDER": gender}}
-    response = requests.post(url, json=data)
+    response = request.post(url, json=data)
 
 
 # Фызываем функцию
