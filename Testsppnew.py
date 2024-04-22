@@ -10,11 +10,17 @@ access_token = "token"
 # Вместо domain вписать домен вашего Bitrix24
 domain = "domain"
 
+# Вместо id вписать идентификатор пользователя, создавшего вебхук
+id = "id"
+
+# Вместо s_code вписать секретный код, полученный при создании вебхук
+s_code = "s_code"
+
 # Вписать вместо Webhook_URL URL вебхука
 webhook_url = "Webhook_URL"
 
 # Установить конечную точку API
-url = f"https://{domain}/rest/crm.contact.list.json"
+url = f"https://{domain}/rest/{id}/{s_code}/crm.contact.list.json"
 headers = {
     "Authorization": f"Bearer {access_token}",
     "Content-Type": "application/json",
