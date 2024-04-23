@@ -47,7 +47,7 @@ if response.status_code == 200:
 else:
     print("Error retrieving contact data")
 
-# Заходим в базу данных
+# Заходим в базу данных. Вставить значения базы данных
 conn = psycopg2.connect(
     dbname="dbname",
     user="user",
