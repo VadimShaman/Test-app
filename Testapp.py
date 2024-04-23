@@ -43,9 +43,6 @@ if response.status_code == 200:
     for contact in contacts:
         data = {"ID": contact["ID"], "Name": contact["NAME"]}
         response = requests.post(webhook_url, json=data)
-        print(f"Sent contact {contact['ID']} to Webhook")
-else:
-    print("Error retrieving contact data")
 
 # Заходим в базу данных. Вставить значения базы данных
 conn = psycopg2.connect(
